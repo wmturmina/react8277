@@ -1,37 +1,52 @@
 import React from 'react'
-import { StyleSheet, Text, View, Button } from 'react-native'
+import axios from 'axios'
+import {
+  FlatList
+} from 'react-native'
+import Post from './src/Post'
 
-export default class App extends React.Component {
-  constructor (props) {
+class App extends React.Component {
+  constructor(props) {
     super(props)
     this.state = {
-      contador: 0
+      fotos: []
     }
   }
 
-  onPressMyButton = (event) => {
-    this.setState({
-      contador: ++this.state.contador
-    })
+  componentDidMount() {
+    this.getFotos()
+  }
+
+  getFotos = () => {
+    return axios.get('https://instalura-api.herokuapp.com/api/public/fotos/rafael')
+      .then((result) => {
+        this.setState({
+          fotos: result.data
+        })
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+  }
+
+  renderItemHandler = ({ item }) => {
+    return (
+      <Post foto={item} />
+    )
   }
 
   render() {
     const {
-      contador
+      fotos
     } = this.state
     return (
-      <View style={styles.container}>
-        <Text>{contador}</Text>
-        <Button title="Add +" onPress={this.onPressMyButton} />
-      </View>
+      <FlatList
+        data={fotos}
+        renderItem={this.renderItemHandler}
+        keyExtractor={item => String(item.id)}
+      />
     )
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
-})
+export default App

@@ -3,6 +3,7 @@ import axios from 'axios'
 import {
   FlatList
 } from 'react-native'
+import _ from 'lodash'
 import Post from './src/Post'
 
 class App extends React.Component {
@@ -17,11 +18,25 @@ class App extends React.Component {
     this.getFotos()
   }
 
+  handlerUpdateFoto = (foto) => {
+    let {
+      fotos
+    } = this.state
+    fotos = _.filter(fotos, item => item.id !== foto.id)
+    fotos = [
+      ...fotos,
+      foto
+    ]
+    this.setState({
+      fotos: _.orderBy(fotos, 'id')
+    })
+  }
+
   getFotos = () => {
     return axios.get('https://instalura-api.herokuapp.com/api/public/fotos/rafael')
       .then((result) => {
         this.setState({
-          fotos: result.data
+          fotos: _.orderBy(result.data, 'id')
         })
       })
       .catch((error) => {
@@ -31,7 +46,7 @@ class App extends React.Component {
 
   renderItemHandler = ({ item }) => {
     return (
-      <Post foto={item} />
+      <Post foto={item} updateCallback={this.handlerUpdateFoto} />
     )
   }
 

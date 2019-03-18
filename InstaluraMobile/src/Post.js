@@ -6,6 +6,7 @@ import {
   View,
   Image
 } from 'react-native'
+import _ from 'lodash'
 import Header from './Header'
 import Like from './Like'
 import Comment from './Comment'
@@ -27,15 +28,51 @@ const styles = StyleSheet.create({
 class Post extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      foto: props.foto
+  }
+
+  handlerAddComment = (comment) => {
+    let {
+      foto,
+      updateCallback
+    } = this.props
+
+    if (comment) {
+      foto.comentarios = [
+        ...foto.comentarios,
+        {
+          id: comment,
+          login: 'eu',
+          texto: comment
+        }
+      ]
+      updateCallback(foto)
     }
+  }
+
+  handlerLikePost = () => {
+    let {
+      foto,
+      updateCallback
+    } = this.props
+
+    foto.likeada = !foto.likeada
+
+    if (foto.likeada) {
+      foto.likers = [
+        ...foto.likers,
+        { login: 'eu' }
+      ]
+    } else {
+      foto.likers = _.filter(foto.likers, item => item.login !== 'eu')
+    }
+
+    updateCallback(foto)
   }
 
   render() {
     const {
       foto
-    } = this.state
+    } = this.props
     return (
       <View style={styles.container}>
         <Header foto={foto} />
@@ -45,15 +82,16 @@ class Post extends Component {
           }}
           style={styles.foto}
         />
-        <Like foto={foto} likeCallback={() => null} />
-        <Comment foto={foto} />
+        <Like foto={foto} likeCallback={this.handlerLikePost} />
+        <Comment foto={foto} addCallback={this.handlerAddComment} />
       </View>
     )
   }
 }
 
 Post.propTypes = {
-  foto: PropTypes.object
+  foto: PropTypes.object,
+  updateCallback: PropTypes.func
 }
 
 export default Post

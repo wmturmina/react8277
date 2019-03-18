@@ -45,7 +45,10 @@ class Comment extends Component {
   }
 
   handlerAddComment = () => {
-    console.warn(this.inputComentarioText)
+    const {
+      addCallback
+    } = this.props
+    addCallback(this.inputComentarioText)
     this.inputComentario.current.clear()
   }
 
@@ -97,7 +100,8 @@ class Comment extends Component {
 }
 
 Comment.propTypes = {
-  foto: PropTypes.object
+  foto: PropTypes.object,
+  addCallback: PropTypes.func
 }
 
 export default Comment

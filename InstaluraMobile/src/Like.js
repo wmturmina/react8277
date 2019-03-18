@@ -28,19 +28,13 @@ class Like extends Component {
     super(props)
   }
 
-  loadIcon = (likeada) => {
-    return likeada
-      ? S2Checked
-      : S2
-  }
-
   showLikes = (likers) => {
     if (likers.length <= 0) {
       return null
     }
     return (
       <Text style={styles.likes}>
-        {likers.length} {`curtida${likers.length > 1 && 's'}`}
+        {likers.length} {`curtida${likers.length > 1 ? 's' : ''}`}
       </Text>
     )
   }
@@ -52,10 +46,14 @@ class Like extends Component {
     } = this.props
     return (
       <View>
-        <TouchableOpacity onPress={likeCallback(foto.id)}>
+        <TouchableOpacity onPress={likeCallback}>
           <Image
             style={styles.botaoDeLike}
-            source={this.loadIcon(foto.likeada)}
+            source={
+              foto.likeada
+                ? S2Checked
+                : S2
+            }
           />
         </TouchableOpacity>
         {this.showLikes(foto.likers)}

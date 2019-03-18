@@ -51,3 +51,5 @@ Native
 - CFS
 
 # Ler: Atomic Design Brad Frost
+# Bugsnag
+# Thoughtworks

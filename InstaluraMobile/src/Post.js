@@ -4,9 +4,11 @@ import {
   Dimensions,
   StyleSheet,
   View,
-  Text,
   Image
 } from 'react-native'
+import Header from './Header'
+import Like from './Like'
+import Comment from './Comment'
 
 const {
   width
@@ -15,17 +17,6 @@ const {
 const styles = StyleSheet.create({
   container: {
     marginTop: 30
-  },
-  cabecalho: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    margin: 10
-  },
-  fotoDePerfil: {
-    marginRight: 10,
-    borderRadius: 20,
-    width: 40,
-    height: 40
   },
   foto: {
     width: width,
@@ -36,31 +27,26 @@ const styles = StyleSheet.create({
 class Post extends Component {
   constructor(props) {
     super(props)
+    this.state = {
+      foto: props.foto
+    }
   }
 
   render() {
     const {
-      foto: { loginUsuario: usuario },
-      foto: { urlPerfil: urlFotoPerfil },
-      foto: { urlFoto: urlFoto }
-    } = this.props
+      foto
+    } = this.state
     return (
       <View style={styles.container}>
-        <View style={styles.cabecalho}>
-          <Image
-            source={{
-              uri: urlFotoPerfil
-            }}
-            style={styles.fotoDePerfil}
-          />
-          <Text>{usuario}</Text>
-        </View>
+        <Header foto={foto} />
         <Image
           source={{
-            uri: urlFoto
+            uri: foto.urlFoto
           }}
           style={styles.foto}
         />
+        <Like foto={foto} likeCallback={() => null} />
+        <Comment foto={foto} />
       </View>
     )
   }

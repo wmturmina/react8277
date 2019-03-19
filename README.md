@@ -53,3 +53,9 @@ Native
 # Ler: Atomic Design Brad Frost
 # Bugsnag
 # Thoughtworks
+# JWT
+- 100% Stateless with JWT
+# DeepLink
+# ChaosMonkey
+# RocksDB
+# Async e Await

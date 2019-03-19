@@ -16,9 +16,6 @@ const {
 } = Dimensions.get('screen')
 
 const styles = StyleSheet.create({
-  container: {
-    marginTop: 30
-  },
   foto: {
     width: width,
     height: width
@@ -33,7 +30,8 @@ class Post extends Component {
   handlerAddComment = (comment) => {
     let {
       foto,
-      updateCallback
+      updateCallback,
+      navigation
     } = this.props
 
     if (comment) {
@@ -41,7 +39,7 @@ class Post extends Component {
         ...foto.comentarios,
         {
           id: comment,
-          login: 'eu',
+          login: navigation.getParam('usuario'),
           texto: comment
         }
       ]
@@ -52,18 +50,21 @@ class Post extends Component {
   handlerLikePost = () => {
     let {
       foto,
-      updateCallback
+      updateCallback,
+      navigation
     } = this.props
+
+    const usuario = navigation.getParam('usuario')
 
     foto.likeada = !foto.likeada
 
     if (foto.likeada) {
       foto.likers = [
         ...foto.likers,
-        { login: 'eu' }
+        { login: usuario }
       ]
     } else {
-      foto.likers = _.filter(foto.likers, item => item.login !== 'eu')
+      foto.likers = _.filter(foto.likers, item => item.login !== usuario)
     }
 
     updateCallback(foto)
@@ -74,7 +75,7 @@ class Post extends Component {
       foto
     } = this.props
     return (
-      <View style={styles.container}>
+      <View>
         <Header foto={foto} />
         <Image
           source={{
@@ -91,7 +92,8 @@ class Post extends Component {
 
 Post.propTypes = {
   foto: PropTypes.object,
-  updateCallback: PropTypes.func
+  updateCallback: PropTypes.func,
+  navigation: PropTypes.object
 }
 
 export default Post

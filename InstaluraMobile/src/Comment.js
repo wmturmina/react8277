@@ -81,7 +81,6 @@ class Comment extends Component {
           <TextInput
             style={styles.input}
             placeholder="Adicione um comentário..."
-            underlineColorAndroid="transparent"
             ref={this.inputComentario}
             onChangeText={this.handlerChangeText}
           />

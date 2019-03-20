@@ -80,7 +80,6 @@ class Feed extends React.Component {
     const {
       fotos
     } = this.state
-    console.warn('Fotos', fotos.length, fotos)
     return (
       <Fragment>
         {

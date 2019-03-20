@@ -8,7 +8,6 @@ const host = 'https://instalura-api.herokuapp.com/api/'
 
 const getToken = async () => {
   const tokenToBeReturned = await AsyncStorage.getItem('token')
-  console.warn('Token', tokenToBeReturned)
   return tokenToBeReturned
 }
 const defaultErrorCallback = () => {
@@ -20,7 +19,6 @@ export const getFeed = async (errorCallBack = defaultErrorCallback) => {
       'X-AUTH-TOKEN': await getToken()
     }
   })
-  console.warn('Feed', returnFeed)
   const {
     status,
     data

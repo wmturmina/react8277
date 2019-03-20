@@ -5,10 +5,9 @@ import {
   TextInput,
   StyleSheet,
   TouchableOpacity,
-  View,
-  AsyncStorage
+  View
 } from 'react-native'
-import axios from 'axios'
+import { doLogin } from '../services/API'
 
 const styles = StyleSheet.create({
   container: {
@@ -41,20 +40,12 @@ class Login extends Component {
     this[target] = event
   }
 
-  handlerLogin = () => {
+  handlerLogin = async () => {
     const { navigation } = this.props
-    axios.post('https://instalura-api.herokuapp.com/api/public/login', {
-      login: this.inputUsuarioText,
-      senha: this.inputPasswordText
-    })
-      .then((result) => {
-        AsyncStorage.setItem('token', result.data)
-        AsyncStorage.setItem('usuario', this.inputUsuarioText)
-        navigation.navigate('FeedScreen', { usuario: this.inputUsuarioText })
-      })
-      .catch((error) => {
-        console.warn('Error', error)
-      })
+    const returnLogin = await doLogin(this.inputUsuarioText, this.inputPasswordText)
+    if (returnLogin) {
+      navigation.navigate('FeedScreen', { usuario: this.inputUsuarioText })
+    }
   }
 
   render() {

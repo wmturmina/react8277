@@ -59,3 +59,6 @@ Native
 # ChaosMonkey
 # RocksDB
 # Async e Await
+# SOLID programming
+# Clean Code
+- Procurar livro

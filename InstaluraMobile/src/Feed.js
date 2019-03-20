@@ -1,5 +1,4 @@
-import React from 'react'
-import axios from 'axios'
+import React, { Fragment } from 'react'
 import PropTypes from 'prop-types'
 import {
   FlatList,
@@ -8,10 +7,16 @@ import {
 } from 'react-native'
 import _ from 'lodash'
 import Post from './Post'
+import {
+  getFeed,
+  doLike,
+  doAddComment
+} from '../services/API'
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: Platform.OS === 'ios' ? 30 : 0
+    marginTop: Platform.OS === 'ios' ? 30 : 0,
+    marginBottom: Platform.OS === 'ios' ? 30 : 0
   }
 })
 
@@ -21,36 +26,41 @@ class Feed extends React.Component {
     this.state = {
       fotos: []
     }
+    this.token = ''
   }
 
   componentDidMount() {
     this.getFotos()
   }
 
-  handlerUpdateFoto = (foto) => {
+  handlerUpdateFoto = async (foto, action) => {
     let {
       fotos
     } = this.state
+    const comment = foto.comment
     fotos = _.filter(fotos, item => item.id !== foto.id)
     fotos = [
       ...fotos,
-      foto
+      _.omit(foto, 'comment')
     ]
     this.setState({
       fotos: _.orderBy(fotos, 'id')
     })
+    if (action === 'like') {
+      await doLike(foto.id)
+    }
+    if (action === 'comment') {
+      await doAddComment(foto.id, comment)
+    }
   }
 
-  getFotos = () => {
-    return axios.get('https://instalura-api.herokuapp.com/api/public/fotos/rafael')
-      .then((result) => {
-        this.setState({
-          fotos: _.orderBy(result.data, 'id')
-        })
+  getFotos = async () => {
+    const feed = await getFeed()
+    if (feed) {
+      this.setState({
+        fotos: feed
       })
-      .catch((error) => {
-        console.error(error)
-      })
+    }
   }
 
   renderItemHandler = ({ item }) => {
@@ -70,13 +80,19 @@ class Feed extends React.Component {
     const {
       fotos
     } = this.state
+    console.warn('Fotos', fotos.length, fotos)
     return (
-      <FlatList
-        data={fotos}
-        renderItem={this.renderItemHandler}
-        keyExtractor={item => String(item.id)}
-        style={styles.container}
-      />
+      <Fragment>
+        {
+          fotos.length !== 0 &&
+          <FlatList
+            data={fotos}
+            renderItem={this.renderItemHandler}
+            keyExtractor={item => String(item.id)}
+            style={styles.container}
+          />
+        }
+      </Fragment>
     )
   }
 }

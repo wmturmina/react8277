@@ -43,7 +43,8 @@ class Post extends Component {
           texto: comment
         }
       ]
-      updateCallback(foto)
+      foto.comment = comment
+      updateCallback(foto, 'comment')
     }
   }
 
@@ -67,7 +68,7 @@ class Post extends Component {
       foto.likers = _.filter(foto.likers, item => item.login !== usuario)
     }
 
-    updateCallback(foto)
+    updateCallback(foto, 'like')
   }
 
   render() {

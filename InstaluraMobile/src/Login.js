@@ -44,7 +44,7 @@ class Login extends Component {
     const { navigation } = this.props
     const returnLogin = await doLogin(this.inputUsuarioText, this.inputPasswordText)
     if (returnLogin) {
-      navigation.navigate('FeedScreen', { usuario: this.inputUsuarioText })
+      navigation.navigate('App', { usuario: this.inputUsuarioText })
     }
   }
 

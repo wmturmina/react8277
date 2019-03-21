@@ -62,3 +62,11 @@ Native
 # SOLID programming
 # Clean Code
 - Procurar livro
+
+#GraphQL
+- Apollo
+- Relay
+- Fazer reports e dashboards
+
+#Typescript
+- Dá para aplicar no meio

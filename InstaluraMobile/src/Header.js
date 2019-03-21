@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {
   StyleSheet,
-  View,
+  TouchableOpacity,
   Text,
   Image
 } from 'react-native'
@@ -21,8 +21,8 @@ const styles = StyleSheet.create({
   }
 })
 
-const Header = ({ foto }) => (
-  <View style={styles.cabecalho}>
+const Header = ({ foto, navigateToFriend }) => (
+  <TouchableOpacity style={styles.cabecalho} onPress={navigateToFriend(foto.loginUsuario)}>
     <Image
       source={{
         uri: foto.urlPerfil
@@ -30,10 +30,11 @@ const Header = ({ foto }) => (
       style={styles.fotoDePerfil}
     />
     <Text>{foto.loginUsuario}</Text>
-  </View>
+  </TouchableOpacity>
 )
 
 Header.propTypes = {
-  foto: PropTypes.object
+  foto: PropTypes.object,
+  navigateToFriend: PropTypes.func
 }
 export default Header

@@ -7,6 +7,7 @@ import {
   Image
 } from 'react-native'
 import _ from 'lodash'
+import { withNavigation } from 'react-navigation'
 import Header from './Header'
 import Like from './Like'
 import Comment from './Comment'
@@ -73,11 +74,12 @@ class Post extends Component {
 
   render() {
     const {
-      foto
+      foto,
+      navigateToFriend
     } = this.props
     return (
       <View>
-        <Header foto={foto} />
+        <Header foto={foto} navigateToFriend={navigateToFriend} />
         <Image
           source={{
             uri: foto.urlFoto
@@ -94,7 +96,8 @@ class Post extends Component {
 Post.propTypes = {
   foto: PropTypes.object,
   updateCallback: PropTypes.func,
-  navigation: PropTypes.object
+  navigation: PropTypes.object,
+  navigateToFriend: PropTypes.func
 }
 
-export default Post
+export default withNavigation(Post)

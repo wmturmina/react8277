@@ -9,6 +9,7 @@ import _ from 'lodash'
 import Post from './Post'
 import {
   getFeed,
+  getFriendFeed,
   doLike,
   doAddComment
 } from '../services/API'
@@ -30,7 +31,15 @@ class Feed extends React.Component {
   }
 
   componentDidMount() {
-    this.getFotos()
+    const {
+      navigation
+    } = this.props
+    const friend = navigation.getParam('friend')
+    if (friend) {
+      this.getFriendFotos(friend)
+    } else {
+      this.getFotos()
+    }
   }
 
   handlerUpdateFoto = async (foto, action) => {
@@ -54,6 +63,13 @@ class Feed extends React.Component {
     }
   }
 
+  handlerNavigateToFriend = (friend) => () => {
+    const {
+      navigation
+    } = this.props
+    navigation.navigate('FriendFeedScreen', { friend: friend })
+  }
+
   getFotos = async () => {
     const feed = await getFeed()
     if (feed) {
@@ -63,15 +79,21 @@ class Feed extends React.Component {
     }
   }
 
+  getFriendFotos = async (friend) => {
+    const feed = await getFriendFeed(friend)
+    if (feed) {
+      this.setState({
+        fotos: feed
+      })
+    }
+  }
+
   renderItemHandler = ({ item }) => {
-    const {
-      navigation
-    } = this.props
     return (
       <Post
         foto={item}
         updateCallback={this.handlerUpdateFoto}
-        navigation={navigation}
+        navigateToFriend={this.handlerNavigateToFriend}
       />
     )
   }

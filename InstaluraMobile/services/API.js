@@ -6,15 +6,35 @@ import _ from 'lodash'
 
 const host = 'https://instalura-api.herokuapp.com/api/'
 
-const getToken = async () => {
-  const tokenToBeReturned = await AsyncStorage.getItem('token')
-  return tokenToBeReturned
-}
 const defaultErrorCallback = () => {
   alert('Unknow error')
 }
+
+export const getToken = async () => {
+  const tokenToBeReturned = await AsyncStorage.getItem('token')
+  return tokenToBeReturned
+}
+
 export const getFeed = async (errorCallBack = defaultErrorCallback) => {
   const returnFeed = await axios.get(`${host}/fotos`, {
+    headers: {
+      'X-AUTH-TOKEN': await getToken()
+    }
+  })
+  const {
+    status,
+    data
+  } = await returnFeed
+  if (status !== 200) {
+    errorCallBack()
+    return []
+  }
+
+  return _.orderBy(data, 'id')
+}
+
+export const getFriendFeed = async (friend, errorCallBack = defaultErrorCallback) => {
+  const returnFeed = await axios.get(`${host}/public/fotos/${friend}`, {
     headers: {
       'X-AUTH-TOKEN': await getToken()
     }

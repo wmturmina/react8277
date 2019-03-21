@@ -85,6 +85,9 @@ class Post extends Component {
             uri: foto.urlFoto
           }}
           style={styles.foto}
+          accessible
+          accessibilityLabel={`Olha a foto do ${foto.loginUsuario}`}
+          accessibilityHint={`Clique duas vezes para ir para o perfil do ${foto.loginUsuario}`}
         />
         <Like foto={foto} likeCallback={this.handlerLikePost} />
         <Comment foto={foto} addCallback={this.handlerAddComment} />

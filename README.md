@@ -70,3 +70,9 @@ Native
 
 #Typescript
 - Dá para aplicar no meio
+
+#Acessabilidade
+- Acessibility and universal design - Lucas Radaelli
+
+#MQTT
+- para fazer chat

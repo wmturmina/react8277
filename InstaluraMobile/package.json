@@ -13,17 +13,32 @@
     "prop-types": "^15.7.2",
     "react": "16.5.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-32.0.0.tar.gz",
-    "react-navigation": "^3.4.1"
+    "react-navigation": "^3.5.1"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.1",
-    "babel-preset-expo": "^5.0.0",
-    "eslint": "^5.15.1",
+    "babel-preset-expo": "^5.1.1",
+    "bunyan": "^1.8.12",
+    "detox": "^11.0.2",
+    "detox-expo-helpers": "^0.6.0",
+    "eslint": "^5.15.3",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-airbnb-base-hf": "^1.10.2",
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-jsx-a11y": "^6.2.1",
-    "eslint-plugin-react": "^7.12.4"
+    "eslint-plugin-react": "^7.12.4",
+    "expo-detox-hook": "^1.0.10",
+    "jest": "^24.5.0"
+  },
+  "detox": {
+    "configuration": {
+      "ios.sim": {
+        "binaryPath": "bin/Instalura.app",
+        "type": "ios.simulator",
+        "name": "iPhone X"
+      }
+    },
+    "test-runner": "jest"
   },
   "private": true
 }

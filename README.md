@@ -11,7 +11,7 @@ React Native
 - Empréstimo
 - Ajuda
 
-Native
+# Native
 - Todo o resto
 
 # Tecnologias do Nubank
@@ -63,16 +63,23 @@ Native
 # Clean Code
 - Procurar livro
 
-#GraphQL
+# GraphQL
 - Apollo
 - Relay
 - Fazer reports e dashboards
 
-#Typescript
+# Typescript
 - Dá para aplicar no meio
 
-#Acessabilidade
+# Acessabilidade
 - Acessibility and universal design - Lucas Radaelli
 
-#MQTT
+# MQTT
 - para fazer chat
+- MQTTBox
+- iot.eclipse.org
+
+# Usar detox
+- com expo ou IOS
+- https://github.com/wix/Detox
+

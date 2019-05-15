@@ -78,8 +78,11 @@ React Native
 - para fazer chat
 - MQTTBox
 - iot.eclipse.org
+- https://www.npmjs.com/package/react-native-paho-mqtt
 
 # Usar detox
 - com expo ou IOS
 - https://github.com/wix/Detox
+- https://github.com/expo/expo/tree/master/packages/jest-expo
 
+# 
